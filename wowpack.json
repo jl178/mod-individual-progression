@@ -1,5 +1,32 @@
 {
   "name": "mod-individual-progression",
   "version": "0.1.0",
-  "target_build": 12340
+  "target_build": 12340,
+  "options": {
+    "mana_costs": {
+      "choices": ["vanilla", "wotlk"],
+      "default": "vanilla",
+      "description": "vanilla: Vanilla and TBC mana costs (patch-V, what IndividualProgression.EnableAllSpellRanks = 0 assumes); wotlk: keep WotLK mana costs (patch-S)"
+    },
+    "classic_login_screen": {
+      "default": true,
+      "description": "Vanilla login screen, logo and music (patch-J)"
+    },
+    "classic_loading_screens": {
+      "default": true,
+      "description": "Vanilla loading screens (patch-J, with patch-U's HD Eastern Kingdoms and Kalimdor)"
+    }
+  },
+  "id_ranges": {
+    "achievement": [533, 533],
+    "item": [101784, 101787],
+    "itemextendedcost": [10125, 12291],
+    "skillline": [40, 40],
+    "skilllineability": [[1687, 1689], [1959, 1959], [3626, 3626], [3969, 3969], [4806, 4810], [5046, 5046], [5966, 5970], [5986, 5987], [7256, 7259], [13240, 13240], [13473, 13473], [13718, 13722]],
+    "skillraceclassinfo": [80, 80],
+    "spell": [[2835, 2837], [3420, 3421], [5763, 5763], [6510, 6510], [8681, 8694], [11201, 11202], [11341, 11343], [11357, 11358], [11398, 11400], [13220, 13230], [25347, 25347], [26786, 26786], [26892, 26892], [26969, 26969], [27282, 27283], [81000, 81139]],
+    "spellitemenchantment": [4001, 4003],
+    "taxipath": [1981, 1981],
+    "taxipathnode": [50000, 50048]
+  }
 }

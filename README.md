@@ -42,19 +42,28 @@ Some changes for Vanilla and TBC content require DBC modification. The .mpq file
 ### Data files through wowpack
 This branch also ships the optional data files in the format of [wowpack](https://github.com/jl178/wowpack), so a realm that builds its client content pack with wowpack needs none of the manual steps in `optional/patch-explanations.txt`:
 
-- `dbc/*.json` holds only the rows that differ from the stock 3.3.5a tables: Spell (3977 changed, 172 new), SkillLine, SkillLineAbility, SkillRaceClassInfo, SpellItemEnchantment, Item, ItemExtendedCost, Achievement, TaxiPath and TaxiPathNode. `wowpack build` merges them into complete DBC files for the client (in the Wowee pack and in `patch-Z.MPQ`) and writes the same rows as `spell_dbc`, `skilllineability_dbc`, ... SQL for the server, so no DBC file in the server's `data/dbc` needs replacing.
-- `client/` holds the Vanilla login screen (patch-J) and the Vanilla loading screens (patch-U); where both had a loading screen, patch-U's wins, as it did in the client.
-- The Spell rows are those of patch-V (Vanilla and TBC mana costs), which `IndividualProgression.EnableAllSpellRanks = 0` assumes. To keep WotLK mana costs instead (patch-S), replace `dbc/Spell.json` with `optional/wowpack/keep-wotlk-mana-costs/Spell.json`.
+- `dbc/*.json` holds only the rows that differ from the stock 3.3.5a tables: Spell (3977 changed and 172 new rows with the default options), SkillLine, SkillLineAbility, SkillRaceClassInfo, SpellItemEnchantment, Item, ItemExtendedCost, Achievement, TaxiPath and TaxiPathNode. `wowpack build` merges them into complete DBC files for the client (in the Wowee pack and in `patch-Z.MPQ`) and writes the same rows as `spell_dbc`, `skilllineability_dbc`, ... SQL for the server, so no DBC file in the server's `data/dbc` needs replacing.
+- Each choice of the manual install is a build option in `wowpack.json`; set one with `wowpack build --set mod-individual-progression.<option>=<value>`:
+
+  | Option | Values | Default | What it ships |
+  |---|---|---|---|
+  | `mana_costs` | `vanilla`, `wotlk` | `vanilla` | `vanilla`: patch-V's Vanilla and TBC mana costs, which `IndividualProgression.EnableAllSpellRanks = 0` assumes (`options/mana_costs/vanilla/dbc/Spell.json`, 827 rows on top of `dbc/Spell.json`). `wotlk`: patch-S, WotLK mana costs; `dbc/Spell.json` alone is patch-S |
+  | `classic_login_screen` | `true`, `false` | `true` | the Vanilla login screen, logo and music of patch-J (`options/classic_login_screen/true/client/`) |
+  | `classic_loading_screens` | `true`, `false` | `true` | the Vanilla loading screens of patch-J, with patch-U's HD Eastern Kingdoms and Kalimdor (`options/classic_loading_screens/true/client/`) |
+
+  `dbc/*.json` holds what patch-S and patch-V share. The loading screens are client-only; the mana costs change the server's `spell_dbc` rows too, so build the pack and the SQL with the same option.
+- `id_ranges` reserves the ids of the rows the module adds that stock 3.3.5a does not have (172 Spell rows, 48 ItemExtendedCost, 49 TaxiPathNode, ...), so another module that picks one of them fails to build instead of merging into these rows.
+- Spells 11202 and 25347 are also serverside placeholders in the core's `spell_dbc`. With the manual install the core's rows win and this module's versions of the two spells never reach the server; the SQL wowpack generates replaces them, and `wowpack build` warns about it.
 - Only the enUS text is kept. The archives' DBCs also carry zhCN and zhTW strings; a pack built from enUS stock files would not use them.
 
 The JSON files were made from the archives in `optional/` with
 
 ```
-wowpack import -locales enUS -stock-dbc <stock 3.3.5a DBFilesClient> -module . Patch-J.mpq Patch-U.mpq patch-V.mpq
-wowpack import -locales enUS -stock-dbc <stock 3.3.5a DBFilesClient> -module <scratch dir> patch-S.mpq
+wowpack import -locales enUS -stock-dbc <stock 3.3.5a DBFilesClient> -module <scratch V> Patch-J.mpq Patch-U.mpq patch-V.mpq
+wowpack import -locales enUS -stock-dbc <stock 3.3.5a DBFilesClient> -module <scratch S> patch-S.mpq
 ```
 
-Run them again after the archives change. The server DBCs in `dbc.7z` and `patch-V.7z` are identical to the client DBCs in `patch-V.mpq`, so one import covers both.
+then splitting the two `Spell.json` files field by field: what both set went to `dbc/Spell.json`, what only V sets to `options/mana_costs/vanilla/dbc/Spell.json` (S sets nothing V does not), and the client files of patch-J and patch-U to the two client options. Run them again after the archives change. The server DBCs in `dbc.7z` and `patch-V.7z` are identical to the client DBCs in `patch-V.mpq`, so one import covers both.
 
 ### Optional Recommended Addons
 - MultiBot: https://github.com/Wishmaster117/MultiBot-Chatless
