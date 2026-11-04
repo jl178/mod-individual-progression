@@ -1,0 +1,11 @@
+{
+  "table": "Item",
+  "rows": [
+    {"ID": 6082, "DisplayInfoID": 9734},
+    {"ID": 9594, "DisplayInfoID": 18094},
+    {"ID": 101784, "ClassID": 9, "Sound_override_subclassID": -1, "Material": -1, "DisplayInfoID": 1134},
+    {"ID": 101785, "ClassID": 9, "Sound_override_subclassID": -1, "Material": -1, "DisplayInfoID": 1134},
+    {"ID": 101786, "ClassID": 9, "Sound_override_subclassID": -1, "Material": -1, "DisplayInfoID": 1134},
+    {"ID": 101787, "ClassID": 9, "Sound_override_subclassID": -1, "Material": -1, "DisplayInfoID": 1134}
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "table": "TaxiPath",
+  "rows": [
+    {"ID": 1981, "FromTaxiNode": 300, "ToTaxiNode": 196}
+  ]
+}

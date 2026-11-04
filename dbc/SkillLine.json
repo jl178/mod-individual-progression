@@ -1,0 +1,6 @@
+{
+  "table": "SkillLine",
+  "rows": [
+    {"ID": 40, "CategoryID": 7, "DisplayName_lang": "Poisons", "Description_lang_mask": 16712188, "SpellIconID": 1, "AlternateVerb_lang_mask": 16712172, "CanLink": 1}
+  ]
+}

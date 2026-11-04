@@ -1,0 +1,6 @@
+{
+  "table": "SkillRaceClassInfo",
+  "rows": [
+    {"ID": 80, "SkillID": 40, "RaceMask": -1, "ClassMask": 8, "Flags": 128}
+  ]
+}

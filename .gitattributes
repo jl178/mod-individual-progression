@@ -100,6 +100,15 @@ TODO         text
 *.tar binary
 *.zip binary
 
+## GAME DATA
+*.blp  binary
+*.m2   binary
+*.skin binary
+*.mp3  binary
+*.dbc  binary
+*.mpq  binary
+*.MPQ  binary
+
 ## EXECUTABLES
 *.exe binary
 *.pyc binary

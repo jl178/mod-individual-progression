@@ -39,6 +39,23 @@ For item changes to take effect, please ensure *DBC.EnforceItemAttributes is set
 ### Optional Data Files
 Some changes for Vanilla and TBC content require DBC modification. The .mpq file for the client and .dbc files for the server can be found in the "optional" directory. These changes include requiring Vanilla reagents such as Flint and Steel for campfires, changing Level 60 enchanting to use Vanilla and not TBC reagents, profession leveling adjustments, etc. These files are all optional and the module will work without the patch, but these recipes will remain their WotLK versions.
 
+### Data files through wowpack
+This branch also ships the optional data files in the format of [wowpack](https://github.com/jl178/wowpack), so a realm that builds its client content pack with wowpack needs none of the manual steps in `optional/patch-explanations.txt`:
+
+- `dbc/*.json` holds only the rows that differ from the stock 3.3.5a tables: Spell (3977 changed, 172 new), SkillLine, SkillLineAbility, SkillRaceClassInfo, SpellItemEnchantment, Item, ItemExtendedCost, Achievement, TaxiPath and TaxiPathNode. `wowpack build` merges them into complete DBC files for the client (in the Wowee pack and in `patch-Z.MPQ`) and writes the same rows as `spell_dbc`, `skilllineability_dbc`, ... SQL for the server, so no DBC file in the server's `data/dbc` needs replacing.
+- `client/` holds the Vanilla login screen (patch-J) and the Vanilla loading screens (patch-U); where both had a loading screen, patch-U's wins, as it did in the client.
+- The Spell rows are those of patch-V (Vanilla and TBC mana costs), which `IndividualProgression.EnableAllSpellRanks = 0` assumes. To keep WotLK mana costs instead (patch-S), replace `dbc/Spell.json` with `optional/wowpack/keep-wotlk-mana-costs/Spell.json`.
+- Only the enUS text is kept. The archives' DBCs also carry zhCN and zhTW strings; a pack built from enUS stock files would not use them.
+
+The JSON files were made from the archives in `optional/` with
+
+```
+wowpack import -locales enUS -stock-dbc <stock 3.3.5a DBFilesClient> -module . Patch-J.mpq Patch-U.mpq patch-V.mpq
+wowpack import -locales enUS -stock-dbc <stock 3.3.5a DBFilesClient> -module <scratch dir> patch-S.mpq
+```
+
+Run them again after the archives change. The server DBCs in `dbc.7z` and `patch-V.7z` are identical to the client DBCs in `patch-V.mpq`, so one import covers both.
+
 ### Optional Recommended Addons
 - MultiBot: https://github.com/Wishmaster117/MultiBot-Chatless
 - Character Services: https://github.com/Badgermilk0/mod-character-services

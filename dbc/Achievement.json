@@ -1,0 +1,6 @@
+{
+  "table": "Achievement",
+  "rows": [
+    {"ID": 533, "Faction": -1, "Instance_ID": 533, "Title_lang": "Naxxramas (Level 60)", "Description_lang": "Defeat the classic, level 60 version of Kel'Thuzad.", "Category": 81, "Ui_order": 154, "IconID": 1898, "Reward_lang_mask": 16712172, "Minimum_criteria": 1}
+  ]
+}
